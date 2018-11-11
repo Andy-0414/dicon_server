@@ -5,6 +5,7 @@ const passport = require('passport') // passport 로그인 구현을 위해 사�
 const session = require('express-session'); // Session
 const MySQLStore = require('express-mysql-session')(session); // MySQL Store
 const cookieParser = require('cookie-parser')
+var path = require('path');
 
 const config = require('./config') // 설정을 불러옴
 
@@ -31,13 +32,27 @@ app.use(passport.session()); // 패스포트 세션 사용
 app.use(express.json()); // body parser
 app.use(express.urlencoded({ extended: false })); // body parser
 app.use(cookieParser()); // 쿠키파서
+app.use(express.static(path.join(__dirname, 'public'))); // 정적 파일
 
 passport.use(new LocalStrategy(
     (username, password, done) => {
-        done(null,{
-            username : username,
-            password : password
-        }) // 구현해라
+        var sql = "SELECT id,password FROM userData WHERE id=?"
+        con.query(sql, username, (err, result, fields) => {
+            if (!result[0]) {
+                console.log("[FAIL LOGIN] ID");
+                done(null, false)
+            }
+            else {
+                if (result[0].password == password) {
+                    console.log(`[LOGIN USER]\nID : ${username}`);
+                    done(null,result[0]);
+                }
+                else {
+                    console.log("[FAIL LOGIN] PW");
+                    done(null, false)
+                }
+            }
+        })
     }
 )); // 로그인 조건 - local
 
@@ -49,8 +64,12 @@ passport.deserializeUser((user, done) => { // 세션 확인
     done(null, user);// 구현해라
 });
 
-app.listen(3000, () => {})
+app.listen(3030, () => {})
 
 var authRouter = require('./routers/auth'); // 라우터 로딩
 
 app.use('/auth', authRouter); // 라우터 연결
+
+app.get('/',(req,res)=>{
+    res.sendFile(path.join(__dirname, '../public', 'index.html'))
+})
