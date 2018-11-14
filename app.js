@@ -36,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'public'))); // 정적 파일
 
 passport.use(new LocalStrategy(
     (username, password, done) => {
-        var sql = "SELECT id,password FROM userData WHERE id=?"
+        var sql = "SELECT email,password FROM userData WHERE email=?"
         con.query(sql, username, (err, result, fields) => {
             if (!result[0]) {
                 console.log("[FAIL LOGIN] ID");
@@ -45,7 +45,7 @@ passport.use(new LocalStrategy(
             else {
                 if (result[0].password == password) {
                     console.log(`[LOGIN USER]\nID : ${username}`);
-                    done(null,result[0]);
+                    done(null, result[0]);
                 }
                 else {
                     console.log("[FAIL LOGIN] PW");
@@ -64,12 +64,17 @@ passport.deserializeUser((user, done) => { // 세션 확인
     done(null, user);// 구현해라
 });
 
-app.listen(3030, () => {})
+app.listen(3030, () => { })
+
+app.use((req, res, next) => {
+    req.isLogin = (req.user ? true : false)
+    next()
+})
 
 var authRouter = require('./routers/auth'); // 라우터 로딩
 
 app.use('/auth', authRouter); // 라우터 연결
 
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../public', 'index.html'))
 })

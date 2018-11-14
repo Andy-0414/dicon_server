@@ -9,11 +9,21 @@ router.use(express.json()); // body parser
 router.use(express.urlencoded({ extended: false })); // body parser
 router.use(cookieParser()); // 쿠키파서
 
+var mysql = require('mysql2'); // MYSQL 사용을 위한 모듀
+var con = mysql.createConnection(config.mysql); // MYSQL 접속
+con.connect(err => { // SQL 접속
+    if (err) {
+        console.error('error connecting: ' + err.stack); // 연결 실패
+        return;
+    }
+    console.log('connected as id ' + con.threadId); // 연결 성공
+});
+
 router.get('/', (req, res) => {
-    if(req.user)
-        res.send("Hello " + req.user.username);
+    if(req.isLogin)
+        res.send(req.user);
     else
-        res.send("Not Login");
+        res.status(400).send({});
 })
 
 router.post('/login',
@@ -26,29 +36,30 @@ router.post('/logout', function (req, res, next) {
     res.status(200).end();
 }); // 로그아웃
 router.post('/register', function (req, res, next) {
-    var id = req.body.username; // 유저 아이디
-    var pw = req.body.password; // 유저 패스워드
     var email = req.body.email; // 유저 이메일
-    if (!id || !pw || !email) {
-        console.log(id, pw, email)
+    var pw = req.body.password; // 유저 패스워드
+    var isAcceptance = (req.body.isAcceptance ? 1 : 0) // 이메일 수신 여부
+    if (!pw || !email) {
+        console.log(pw, email)
         console.log("[NOT DATA]")
         res.status(405).end() // 데이터가 없을 시 405
     }
     else {
-        console.log(id, pw, email)
-        var sql = "SELECT id FROM userData WHERE id=?";
-        con.query(sql, [id], (err, result, fields) => {
+        console.log(email,pw);
+        var sql = "SELECT * FROM userData WHERE email=?";
+        con.query(sql, [email], (err, result, fields) => {
             if (err) {
                 res.status(505).end(); // 에러 시 505
             }
+            console.log(result)
             if (result.length == 0) {
-                var sql = "INSERT INTO userData (id, password, email) VALUES(?,?,?)";
-                con.query(sql, [id, pw, email], (err, result, fields) => {
+                var sql = "INSERT INTO userData (email, password, isAcceptance) VALUES(?,?,?)";
+                con.query(sql, [email, pw, isAcceptance], (err, result, fields) => {
                     if (err) {
                         res.status(505).end(); // 에러 시 505
                     }
                     else {
-                        console.log(`[Create User]\nID : ${id}`);
+                        console.log(`[Create User]\nID : ${email}`);
                         res.status(200).end() // 제대로 생성됬을 시 200
                     }
                 })
