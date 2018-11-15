@@ -1,10 +1,8 @@
 const config = {
-    mysql: { // MYSQL 연결 설정
-        host: 'localhost',
-        user: 'root',
-        port: 3306,
-        password: '1111',
-        database: 'dicon'
+    mongo: {
+        url: 'mongodb://localhost/dicon',
+        autoRemove: 'interval',
+        autoRemoveInterval: 60 // In minutes. Default
     },
     secretKey: "TMP" // 세션 보안 키 설정
 }
