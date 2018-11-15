@@ -11,10 +11,6 @@ const logger = require('../modules/logger')
 router.use(express.json()); // body parser
 router.use(express.urlencoded({ extended: false })); // body parser
 router.use(cookieParser()); // 쿠키파서
-router.use((req, res, next) => { // 로그인 유무 확인 미들웨어
-    req.isLogin = (req.user ? true : false)
-    next()
-})
 
 // Mongo DB
 const mongoose = require('mongoose');
@@ -27,8 +23,6 @@ mongoose.connect('mongodb://localhost/dicon', { useNewUrlParser: true });
 const User = require('../schema/userData');
 
 router.get('/', (req, res) => { // 유저 데이터 가져오기
-    res.header('Access-Control-Allow-Origin', '*');
-    console.log(req.isLogin)
     if (req.isLogin)
         res.status(200).send(req.user);
     else

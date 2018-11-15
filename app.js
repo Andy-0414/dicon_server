@@ -60,6 +60,11 @@ passport.deserializeUser((user, done) => { // 세션 확인
 
 app.listen(3030, () => { })
 
+app.use((req, res, next) => { // 로그인 유무 확인 미들웨어
+    req.isLogin = (req.user ? true : false)
+    next()
+})
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../public', 'index.html'))
 })
