@@ -10,6 +10,9 @@ const path = require('path');
 const config = require('./config') // 설정을 불러옴
 const logger = require('./modules/logger')
 
+// var cors = require('cors')
+// app.use(cors()); // 프론트단 개발을 위한 임시 설정
+
 app.use(session({
     secret: config.secretKey,
     resave: false,
@@ -65,9 +68,9 @@ app.use((req, res, next) => { // 로그인 유무 확인 미들웨어
     next()
 })
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public', 'index.html'))
-})
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../public', 'index.html'))
+// }) // 프론트단 개발을 위해 주석처리
 
 const authRouter = require('./routers/auth'); // 라우터 로딩
 
