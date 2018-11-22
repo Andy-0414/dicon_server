@@ -4,5 +4,10 @@ var Schema = mongoose.Schema;
 module.exports = mongoose.model('userData', new Schema({
     email: String,
     password: String,
-    isAcceptance: Boolean
+    phoneNumber: String,
+    school: String,
+    age: Number,
+    isAcceptance: Boolean,
+    ownerContest: Array,
+    participantContest: Array
 }));

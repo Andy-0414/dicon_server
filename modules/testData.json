@@ -11,15 +11,15 @@
         "tags": [
             {
                 "color": "red",
-                "tag": "고등"
+                "text": "고등"
             },
             {
                 "color": "orange",
-                "tag": "해커톤"
+                "text": "해커톤"
             },
             {
                 "color": "orange",
-                "tag": "교내대회"
+                "text": "교내대회"
             }
         ],
         "isJoin": false,
@@ -29,7 +29,7 @@
             {
                 "type": "text",
                 "label": "당신의 이름은?",
-                "data": null
+                "data": "이름"
             },
             {
                 "type": "select",
@@ -51,51 +51,443 @@
             },
             {
                 "type": "switch",
-                "label": "동의합니까?"
+                "label": "동의합니까?",
+                "data": "동의?"
             }
         ]
     },
     {
         "id": 2,
-        "name": "바른톤",
-        "img": "https://cfile1.onoffmix.com/images/event/145572/s",
+        "name": "앱잼",
+        "img": "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/38476985_2135733006747577_7496676737254686720_n.png?_nc_cat=105&_nc_ht=scontent-icn1-1.xx&oh=d0bf137dfd856f682eb46d6a0d069137&oe=5C71F520",
         "content": "해커톤",
         "date": {
-            "startDate": "2019-1-5",
-            "endDate": "2019-1-6"
+            "startDate": "2018-8-20",
+            "endDate": "2018-9-30"
         },
         "tags": [
             {
-                "color": "green",
-                "tag": "외부"
-            },
-            {
                 "color": "red",
-                "tag": "초등"
-            },
-            {
-                "color": "red",
-                "tag": "중등"
-            },
-            {
-                "color": "red",
-                "tag": "고등"
-            },
-            {
-                "color": "red",
-                "tag": "대학"
+                "text": "고등"
             },
             {
                 "color": "orange",
-                "tag": "해커톤"
+                "text": "해커톤"
             },
             {
                 "color": "orange",
-                "tag": "외부대회"
+                "text": "외부대회"
             }
         ],
         "isJoin": false,
         "isApplicable": true,
-        "link": "https://www.onoffmix.com/event/145572"
+        "link": null,
+        "question": [
+            {
+                "type": "text",
+                "label": "당신의 이름은?",
+                "data": "이름"
+            },
+            {
+                "type": "text",
+                "label": "당신의 학교는?",
+                "data": "학교"
+            },
+            {
+                "type": "text",
+                "label": "당신의 전화번호는?",
+                "data": "전화번호"
+            },
+            {
+                "type": "checkbox",
+                "label": "저녁 도시락은?",
+                "data": [
+                    "치즈돈까스",
+                    "치킨까스"
+                ]
+            },
+            {
+                "type": "switch",
+                "label": "동의합니까?",
+                "data": "동의?"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "바른톤",
+        "img": "https://cfile1.onoffmix.com/images/event/145572/s",
+        "content": "해커톤",
+        "date": {
+            "startDate": "2019-1-10",
+            "endDate": "2019-2-20"
+        },
+        "tags": [
+            {
+                "color": "red",
+                "text": "고등"
+            },
+            {
+                "color": "orange",
+                "text": "해커톤"
+            },
+            {
+                "color": "orange",
+                "text": "외부대회"
+            }
+        ],
+        "isJoin": true,
+        "isApplicable": true,
+        "link": null,
+        "question": [
+            {
+                "type": "text",
+                "label": "당신의 이름은?",
+                "data": "이름"
+            },
+            {
+                "type": "text",
+                "label": "당신의 학교는?",
+                "data": "학교"
+            },
+            {
+                "type": "text",
+                "label": "당신의 전화번호는?",
+                "data": "전화번호"
+            },
+            {
+                "type": "checkbox",
+                "label": "저녁 도시락은?",
+                "data": [
+                    "치즈돈까스",
+                    "치킨까스"
+                ]
+            },
+            {
+                "type": "checkbox",
+                "label": "핫식스 또는 레드불?",
+                "data": [
+                    "핫식스",
+                    "레드불"
+                ]
+            },
+            {
+                "type": "switch",
+                "label": "동의합니까?",
+                "data": "동의?"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "if 해커톤",
+        "img": "https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/43296378_341495189743882_8082769748288339968_n.jpg?_nc_cat=110&_nc_ht=scontent-icn1-1.xx&oh=c6bfa85ea0be3bab087756e460e560b7&oe=5C3CE5C5",
+        "content": "해커톤",
+        "date": {
+            "startDate": "2018-10-10",
+            "endDate": "2018-11-20"
+        },
+        "tags": [
+            {
+                "color": "red",
+                "text": "고등"
+            },
+            {
+                "color": "orange",
+                "text": "해커톤"
+            },
+            {
+                "color": "orange",
+                "text": "외부대회"
+            }
+        ],
+        "isJoin": true,
+        "isApplicable": true,
+        "link": null,
+        "question": [
+            {
+                "type": "text",
+                "label": "당신의 이름은?",
+                "data": "이름"
+            },
+            {
+                "type": "text",
+                "label": "당신의 학교는?",
+                "data": "학교"
+            },
+            {
+                "type": "text",
+                "label": "당신의 전화번호는?",
+                "data": "전화번호"
+            },
+            {
+                "type": "checkbox",
+                "label": "저녁 식사는?",
+                "data": [
+                    "치킨",
+                    "피자"
+                ]
+            },
+            {
+                "type": "switch",
+                "label": "동의합니까?",
+                "data": "동의?"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "T 해커톤",
+        "img": "https://developers.sktelecom.com/upload/opdc/daumeditor/20170615/daumEditerUserName_20170615190827.png",
+        "content": "해커톤",
+        "date": {
+            "startDate": "2018-10-10",
+            "endDate": "2018-11-20"
+        },
+        "tags": [
+            {
+                "color": "red",
+                "text": "대학생"
+            },
+            {
+                "color": "orange",
+                "text": "해커톤"
+            },
+            {
+                "color": "orange",
+                "text": "외부대회"
+            }
+        ],
+        "isJoin": true,
+        "isApplicable": true,
+        "link": null,
+        "question": [
+            {
+                "type": "text",
+                "label": "당신의 이름은?",
+                "data": "이름"
+            },
+            {
+                "type": "text",
+                "label": "당신의 학교는?",
+                "data": "학교"
+            },
+            {
+                "type": "text",
+                "label": "당신의 전화번호는?",
+                "data": "전화번호"
+            },
+            {
+                "type": "switch",
+                "label": "동의합니까?",
+                "data": "동의?"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "SW융합 해커톤 대회",
+        "img": "https://cfile1.onoffmix.com/images/event/146873/s",
+        "content": "해커톤",
+        "date": {
+            "startDate": "2017-10-10",
+            "endDate": "2018-1-20"
+        },
+        "tags": [
+            {
+                "color": "red",
+                "text": "대학생"
+            },
+            {
+                "color": "orange",
+                "text": "해커톤"
+            },
+            {
+                "color": "orange",
+                "text": "외부대회"
+            }
+        ],
+        "isJoin": true,
+        "isApplicable": true,
+        "link": null,
+        "question": [
+            {
+                "type": "text",
+                "label": "당신의 이름은?",
+                "data": "이름"
+            },
+            {
+                "type": "text",
+                "label": "당신의 학교는?",
+                "data": "학교"
+            },
+            {
+                "type": "text",
+                "label": "당신의 전화번호는?",
+                "data": "전화번호"
+            },
+            {
+                "type": "switch",
+                "label": "동의합니까?",
+                "data": "동의?"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "NUGU Play 개발 및 아이디어 공모전",
+        "img": "https://cfile1.onoffmix.com/images/event/156014/s",
+        "content": "공모전",
+        "date": {
+            "startDate": "2017-11-10",
+            "endDate": "2018-1-30"
+        },
+        "tags": [
+            {
+                "color": "red",
+                "text": "대학생"
+            },
+            {
+                "color": "orange",
+                "text": "공모전"
+            },
+            {
+                "color": "orange",
+                "text": "외부대회"
+            }
+        ],
+        "isJoin": true,
+        "isApplicable": true,
+        "link": null,
+        "question": [
+            {
+                "type": "text",
+                "label": "당신의 이름은?",
+                "data": "이름"
+            },
+            {
+                "type": "text",
+                "label": "당신의 학교는?",
+                "data": "학교"
+            },
+            {
+                "type": "text",
+                "label": "당신의 전화번호는?",
+                "data": "전화번호"
+            },
+            {
+                "type": "text",
+                "label": "지원 동기는?",
+                "data": "지원동기"
+            },
+            {
+                "type": "switch",
+                "label": "동의합니까?",
+                "data": "동의?"
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "name": "4차산업혁명 특별시 대전 ICT/SW 분야 빅데이터 공모전",
+        "img": "https://cfile1.onoffmix.com/images/event/155986/s",
+        "content": "공모전",
+        "date": {
+            "startDate": "2017-12-10",
+            "endDate": "2018-2-30"
+        },
+        "tags": [
+            {
+                "color": "red",
+                "text": "대학생"
+            },
+            {
+                "color": "orange",
+                "text": "공모전"
+            },
+            {
+                "color": "orange",
+                "text": "외부대회"
+            }
+        ],
+        "isJoin": true,
+        "isApplicable": true,
+        "link": null,
+        "question": [
+            {
+                "type": "text",
+                "label": "당신의 이름은?",
+                "data": "이름"
+            },
+            {
+                "type": "text",
+                "label": "당신의 학교는?",
+                "data": "학교"
+            },
+            {
+                "type": "text",
+                "label": "당신의 전화번호는?",
+                "data": "전화번호"
+            },
+            {
+                "type": "text",
+                "label": "지원 분야는?",
+                "data": "지원분야"
+            },
+            {
+                "type": "switch",
+                "label": "동의합니까?",
+                "data": "동의?"
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "name": "제 9회 KT&G 상상실현 콘테스트",
+        "img": "https://cfile1.onoffmix.com/images/event/155964/s",
+        "content": "공모전",
+        "date": {
+            "startDate": "2017-12-20",
+            "endDate": "2018-1-20"
+        },
+        "tags": [
+            {
+                "color": "red",
+                "text": "대학생"
+            },
+            {
+                "color": "orange",
+                "text": "공모전"
+            },
+            {
+                "color": "orange",
+                "text": "외부대회"
+            }
+        ],
+        "isJoin": true,
+        "isApplicable": true,
+        "link": null,
+        "question": [
+            {
+                "type": "text",
+                "label": "당신의 이름은?",
+                "data": "이름"
+            },
+            {
+                "type": "text",
+                "label": "당신의 학교는?",
+                "data": "학교"
+            },
+            {
+                "type": "text",
+                "label": "당신의 전화번호는?",
+                "data": "전화번호"
+            },
+            {
+                "type": "switch",
+                "label": "동의합니까?",
+                "data": "동의?"
+            }
+        ]
     }
 ]

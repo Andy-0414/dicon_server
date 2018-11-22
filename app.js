@@ -10,8 +10,7 @@ const path = require('path');
 const config = require('./config') // 설정을 불러옴
 const logger = require('./modules/logger')
 
-// var cors = require('cors')
-// app.use(cors()); // 프론트단 개발을 위한 임시 설정
+const db = require('./modules/mongoConnect').getDB
 
 app.use(session({
     secret: config.secretKey,
@@ -30,8 +29,12 @@ app.use(express.static(path.join(__dirname, 'public'))); // 정적 파일
 
 const User = require('./schema/userData');
 
-passport.use(new LocalStrategy(
-    (username, password, done) => {
+passport.use(new LocalStrategy({
+    usernameField: 'username',
+    passwordField: 'password',
+    passReqToCallback: true 
+},
+    (req, username, password, done) => {
         User.findOne({ email: username }, (err, data) => {
             if (err) {
                 logger.log(`[Login] ${err}`)
@@ -53,7 +56,7 @@ passport.use(new LocalStrategy(
 
 
 passport.serializeUser((user, done) => { // 세션 생성
-    if(!user) return done(null,false);
+    if (!user) return done(null, false);
     done(null, user);
 });
 
@@ -68,10 +71,8 @@ app.use((req, res, next) => { // 로그인 유무 확인 미들웨어
     next()
 })
 
-// app.get('/', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../public', 'index.html'))
-// }) // 프론트단 개발을 위해 주석처리
-
 const authRouter = require('./routers/auth'); // 라우터 로딩
+const contestRouter = require('./routers/contest'); // 라우터 로딩
 
 app.use('/auth', authRouter); // 라우터 연결
+app.use('/contest', contestRouter); // 라우터 연결

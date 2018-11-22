@@ -8,19 +8,7 @@ const MongoStore = require('connect-mongo')(session); // Mongo Store
 const config = require('../config') // 설정을 불러옴
 const logger = require('../modules/logger')
 
-router.use(express.json()); // body parser
-router.use(express.urlencoded({ extended: false })); // body parser
-router.use(cookieParser()); // 쿠키파서
-
-// Mongo DB
-const mongoose = require('mongoose');
-const db = mongoose.connection;
-db.on('error', console.error);
-db.once('open', function () {
-    console.log("MongoDB 연결");
-});
-mongoose.connect('mongodb://localhost/dicon', { useNewUrlParser: true });
-const User = require('../schema/userData');
+const User = require('../schema/userData')
 
 router.get('/', (req, res) => { // 유저 데이터 가져오기
     if (req.isLogin)
@@ -32,11 +20,11 @@ router.get('/', (req, res) => { // 유저 데이터 가져오기
 router.post('/login', // 로그인
     passport.authenticate('local'),
     (req, res) => {
-        res.status(200).end();
+        res.status(200).send(req.user).end();
     });
 
 router.post('/logout', function (req, res, next) { // 로그아웃
-    if(req.isLogin){
+    if (req.isLogin) {
         logger.log(`[LogOut] ${req.user.email}`)
         req.logout();
     }
@@ -46,6 +34,11 @@ router.post('/logout', function (req, res, next) { // 로그아웃
 router.post('/register', function (req, res, next) {
     var email = req.body.email; // 유저 이메일
     var pw = req.body.password; // 유저 패스워드
+
+    var phoneNumber = req.body.phoneNumber
+    var school = req.body.school
+    var age = req.body.age
+
     var isAcceptance = (req.body.isAcceptance ? 1 : 0) // 이메일 수신 여부
 
     if (!pw || !email) {
@@ -73,6 +66,11 @@ router.post('/register', function (req, res, next) {
                 var newUser = new User();
                 newUser.email = email
                 newUser.password = pw
+
+                newUser.phoneNumber = phoneNumber
+                newUser.school = school
+                newUser.age = age
+
                 newUser.isAcceptance = isAcceptance
 
                 newUser.save(err => {
