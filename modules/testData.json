@@ -440,54 +440,5 @@
                 "data": "동의?"
             }
         ]
-    },
-    {
-        "id": 9,
-        "name": "제 9회 KT&G 상상실현 콘테스트",
-        "img": "https://cfile1.onoffmix.com/images/event/155964/s",
-        "content": "공모전",
-        "date": {
-            "startDate": "2017-12-20",
-            "endDate": "2018-1-20"
-        },
-        "tags": [
-            {
-                "color": "red",
-                "text": "대학생"
-            },
-            {
-                "color": "orange",
-                "text": "공모전"
-            },
-            {
-                "color": "orange",
-                "text": "외부대회"
-            }
-        ],
-        "isJoin": true,
-        "isApplicable": true,
-        "link": null,
-        "question": [
-            {
-                "type": "text",
-                "label": "당신의 이름은?",
-                "data": "이름"
-            },
-            {
-                "type": "text",
-                "label": "당신의 학교는?",
-                "data": "학교"
-            },
-            {
-                "type": "text",
-                "label": "당신의 전화번호는?",
-                "data": "전화번호"
-            },
-            {
-                "type": "switch",
-                "label": "동의합니까?",
-                "data": "동의?"
-            }
-        ]
     }
 ]

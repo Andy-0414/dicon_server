@@ -63,16 +63,14 @@ router.post('/register', function (req, res, next) {
                 })
             }
             else {
-                var newUser = new User();
-                newUser.email = email
-                newUser.password = pw
-
-                newUser.phoneNumber = phoneNumber
-                newUser.school = school
-                newUser.age = age
-
-                newUser.isAcceptance = isAcceptance
-
+                var newUser = new User({
+                    email: email,
+                    password: pw,
+                    phoneNumber: phoneNumber,
+                    school: school,
+                    age: age,
+                    isAcceptance: isAcceptance
+                });
                 newUser.save(err => {
                     if (err) {
                         logger.log(`[Register] ${err}`)

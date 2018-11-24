@@ -5,7 +5,7 @@ const passport = require('passport') // passport 로그인 구현을 위해 사�
 const session = require('express-session'); // Session
 const MongoStore = require('connect-mongo')(session); // Mongo Store
 const cookieParser = require('cookie-parser')
-const path = require('path');
+
 
 const config = require('./config') // 설정을 불러옴
 const logger = require('./modules/logger')
@@ -25,7 +25,8 @@ app.use(passport.session()); // 패스포트 세션 사용
 app.use(express.json()); // body parser
 app.use(express.urlencoded({ extended: false })); // body parser
 app.use(cookieParser()); // 쿠키파서
-app.use(express.static(path.join(__dirname, 'public'))); // 정적 파일
+app.use(express.static('public'));
+app.use(express.static('img')); // 정적 파일
 
 const User = require('./schema/userData');
 
@@ -49,6 +50,7 @@ passport.use(new LocalStrategy({
                 return done(null, false, { message: '비밀번호가 일치하지 않습니다.', succ: false });
             }
             logger.log(`[Login] 로그인 성공 : ${username}`)
+            delete data[password]
             return done(null, data);
         });
     }
