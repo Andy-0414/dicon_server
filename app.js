@@ -58,12 +58,15 @@ passport.use(new LocalStrategy({
 
 
 passport.serializeUser((user, done) => { // 세션 생성
-    if (!user) return done(null, false);
-    done(null, user);
+    User.findOne({ email: user.email }, (err, data) => {
+        done(null, data);
+    })
 });
 
 passport.deserializeUser((user, done) => { // 세션 확인
-    done(null, user);
+    User.findOne({ email: user.email }, (err, data) => {
+        done(null, data);
+    })
 });
 
 app.listen(3030, () => { })
