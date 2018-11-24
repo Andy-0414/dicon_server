@@ -14,7 +14,7 @@ const upload = multer({
             cb(null, 'img/');
         },
         filename: function (req, file, cb) {
-            Contest.findOneAndUpdate({ id: req.body.id }, { img: req.body.id + path.extname(file.originalname)}, (err, data) => {
+            Contest.findOneAndUpdate({ id: req.body.id }, { img: req.body.id + path.extname(file.originalname) }, (err, data) => {
                 if (err || !data) {
                     logger.log(`[UpdateContest] ${err}`)
                     res.status(500).send({
@@ -74,9 +74,6 @@ router.get('/getContestData', (req, res) => { // [R]ead
             }))
         }
     })
-    // fs.readFile('./modules/testData.json', (err, data) => {
-    //     res.send(JSON.parse(data))
-    // })
 })
 
 router.post('/updateContest', (req, res) => { // [U]pdate
