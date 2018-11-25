@@ -44,6 +44,38 @@ router.post('/joinContest', (req, res) => { // [C]reate
     }
 })
 
+router.post('/getJoinData', (req, res) => { //[R]ead
+    if (req.isLogin) {
+        var id = req.body.id
+        User.findOne({ email: req.user.email }, (err, userdata) => {
+            if (userdata.ownerContest.indexOf(id) != -1) {
+                Join.findOne({ id: id }, (err, data) => {
+                    if (err || !data) {
+                        logger.log(`[UpdateContest] ${err}`)
+                        res.status(500).send({
+                            message: "서버 장애가 발생하였습니다.",
+                            succ: false
+                        })
+                    }
+                    res.send(data.data)
+                })
+            }
+            else {
+                res.status(400).send({
+                    message: "권한 없음",
+                    succ: false
+                })
+            }
+        })
+    }
+    else {
+        res.status(400).send({
+            message: "로그인 필요",
+            succ: false
+        })
+    }
+})
+
 router.post('/detachContest', (req, res) => { // [D]elete
     if (req.isLogin) {
         var id = req.body.id

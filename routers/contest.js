@@ -50,8 +50,8 @@ router.post('/createContest', (req, res) => { // [C]reate
                 else {
                     User.findOne({ email: req.user.email }, (err, data) => {
                         data.ownerContest.push(count)
-                        var newJoin = new Join({ id: count, data: []})
-                        newJoin.save(err=>{
+                        var newJoin = new Join({ id: count, data: [] })
+                        newJoin.save(err => {
                             data.save(err => {
                                 res.send({ id: count })
                             })
@@ -96,8 +96,8 @@ router.get('/getContestData', (req, res) => { // [R]ead
 router.post('/updateContest', (req, res) => { // [U]pdate
     if (req.isLogin) {
         var id = req.body.data.id
-        User.findOne({ email: req.user.email }, (err, data) => {
-            if (data.ownerContest.indexOf(id) != -1) {
+        User.findOne({ email: req.user.email }, (err, userdata) => {
+            if (userdata.ownerContest.indexOf(id) != -1) {
                 Contest.findOneAndUpdate({ id: id }, req.body.data, (err, data) => {
                     if (err || !data) {
                         logger.log(`[UpdateContest] ${err}`)
@@ -106,7 +106,10 @@ router.post('/updateContest', (req, res) => { // [U]pdate
                             succ: false
                         })
                     }
-                    res.send(data)
+                    res.send({
+                        message: "성공",
+                        succ: true
+                    })
                 })
             }
             else {
@@ -140,7 +143,7 @@ router.post('/deleteContest', (req, res) => { // [D]elete
                     }
                     data.ownerContest.splice(data.ownerContest.indexOf(id), 1)
                     data.save(err => {
-                        Join.deleteOne({id : id},err=>{
+                        Join.deleteOne({ id: id }, err => {
                             res.send({
                                 message: "성공",
                                 succ: true
