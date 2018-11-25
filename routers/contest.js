@@ -9,6 +9,8 @@ const logger = require('../modules/logger')
 
 const Contest = require('../schema/contestData')
 const User = require('../schema/userData')
+const Join = require('../schema/joinData')
+
 const upload = multer({
     storage: multer.diskStorage({
         destination: function (req, file, cb) {
@@ -48,8 +50,11 @@ router.post('/createContest', (req, res) => { // [C]reate
                 else {
                     User.findOne({ email: req.user.email }, (err, data) => {
                         data.ownerContest.push(count)
-                        data.save(err => {
-                            res.send({ id: count })
+                        var newJoin = new Join({ id: count, data: []})
+                        newJoin.save(err=>{
+                            data.save(err => {
+                                res.send({ id: count })
+                            })
                         })
                     })
                 }
@@ -135,9 +140,11 @@ router.post('/deleteContest', (req, res) => { // [D]elete
                     }
                     data.ownerContest.splice(data.ownerContest.indexOf(id), 1)
                     data.save(err => {
-                        res.send({
-                            message: "성공",
-                            succ: true
+                        Join.deleteOne({id : id},err=>{
+                            res.send({
+                                message: "성공",
+                                succ: true
+                            })
                         })
                     })
                 })

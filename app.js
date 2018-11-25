@@ -79,6 +79,8 @@ app.use((req, res, next) => { // 로그인 유무 확인 미들웨어
 
 const authRouter = require('./routers/auth'); // 라우터 로딩
 const contestRouter = require('./routers/contest'); // 라우터 로딩
+const joinRouter = require('./routers/join'); // 라우터 로딩
 
 app.use('/auth', authRouter); // 라우터 연결
 app.use('/contest', contestRouter); // 라우터 연결
+app.use('/join', joinRouter); // 라우터 연결

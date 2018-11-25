@@ -8,6 +8,7 @@ var contestSchema = new Schema({
     content: String,
     date: Object,
     tags: Array,
+    isJoin: Boolean,
     isApplicable: Boolean,
     link: String,
     question: Array
