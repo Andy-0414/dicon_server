@@ -5,7 +5,7 @@ const passport = require('passport') // passport 로그인 구현을 위해 사�
 const session = require('express-session'); // Session
 const MongoStore = require('connect-mongo')(session); // Mongo Store
 const cookieParser = require('cookie-parser')
-
+const history = require('connect-history-api-fallback');
 
 const config = require('./config') // 설정을 불러옴
 const logger = require('./modules/logger')
@@ -22,6 +22,7 @@ app.use(session({
 app.use(passport.initialize()); // 패스포트 사용
 app.use(passport.session()); // 패스포트 세션 사용
 
+app.use(history());
 app.use(express.json()); // body parser
 app.use(express.urlencoded({ extended: false })); // body parser
 app.use(cookieParser()); // 쿠키파서
