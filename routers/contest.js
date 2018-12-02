@@ -1,10 +1,8 @@
 const express = require('express'); // express
-const fs = require('fs')
 const multer = require('multer');
 const router = express.Router(); // 라우터 모듈
 const path = require('path');
 
-const config = require('../config') // 설정을 불러옴
 const logger = require('../modules/logger')
 
 const Contest = require('../schema/contestData')

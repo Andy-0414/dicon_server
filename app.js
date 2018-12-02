@@ -84,3 +84,8 @@ const joinRouter = require('./routers/join'); // 라우터 로딩
 app.use('/auth', authRouter); // 라우터 연결
 app.use('/contest', contestRouter); // 라우터 연결
 app.use('/join', joinRouter); // 라우터 연결
+
+app.use(function (err, req, res, next) { // 에러 핸들링
+    logger.log(err.stack);
+    res.status(500).send('SERVER ERROR');
+});

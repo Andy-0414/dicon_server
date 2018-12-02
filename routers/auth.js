@@ -1,11 +1,6 @@
 const express = require('express'); // express
 const router = express.Router(); // 라우터 모듈
 const passport = require('passport') // passport 로그인 구현을 위해 사용
-const cookieParser = require('cookie-parser');
-const session = require('express-session'); // Session
-const MongoStore = require('connect-mongo')(session); // Mongo Store
-
-const config = require('../config') // 설정을 불러옴
 const logger = require('../modules/logger')
 
 const User = require('../schema/userData')
@@ -37,7 +32,7 @@ router.post('/register', function (req, res, next) {
 
     var phoneNumber = req.body.phoneNumber
     var school = req.body.school
-    var age = req.body.age
+    var age = (parseInt(req.body.age) === Number ? req.body.age : 0)
 
     var isAcceptance = (req.body.isAcceptance ? 1 : 0) // 이메일 수신 여부
 
