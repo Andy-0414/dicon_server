@@ -3,6 +3,7 @@ const multer = require('multer');
 const router = express.Router(); // 라우터 모듈
 const path = require('path');
 
+const config = require('../config') // 설정을 불러옴
 const logger = require('../modules/logger')
 
 const Contest = require('../schema/contestData')
@@ -97,7 +98,7 @@ router.get('/getTags', (req, res) => { // [R]ead
                 succ: false
             })
         }
-        var out = []
+        var out = config.tags
         data.forEach(x=>{
             x.tags.forEach(y=>{
                 out.push(y)
