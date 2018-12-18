@@ -88,7 +88,7 @@ router.post('/register', function (req, res, next) {
 router.post('/update', function (req, res, next) { // 계정 정보 변경
     if (req.isLogin)
     {
-        var data = {
+        var reqData = {
             phoneNumber: req.body.phoneNumber,
             school: req.body.school,
             age: req.body.age,
@@ -98,19 +98,24 @@ router.post('/update', function (req, res, next) { // 계정 정보 변경
             cPassword : req.body.cPassword,
             nPassword : req.body.nPassword
         }
-        User.findOneAndUpdate({email:req.user.email},data,(err,data)=>{
+        User.findOne({email:req.user.email},(err,data)=>{
             if (err) {
-                logger.log(`[Update] ${err}`)
                 res.status(500).send({
                     message: "서버 장애가 발생하였습니다.",
                     succ: false
                 }).end()
             }
+            data.phoneNumber = reqData.phoneNumber
+            data.school = reqData.school
+            data.age = reqData.age
+            data.isAcceptance = reqData.isAcceptance
+
             if(pw.cPassword && pw.nPassword){
                 if(data.password == pw.cPassword){
-                        User.updateOne({ email: data.email }, { password: pw.nPassword},(err)=>{
-                            delete data.password
-                            res.send(data).end()
+                    data.password= pw.nPassword
+                    data.save(err=>{
+                        delete data.password
+                        res.send(data).end()
                     })
                 }
                 else{
@@ -121,8 +126,10 @@ router.post('/update', function (req, res, next) { // 계정 정보 변경
                 }
             }
             else{
-                //delete data.password
-                res.send(data).end()
+                data.save(err => {
+                    delete data.password
+                    res.send(data).end()
+                })
             }
         })
     }
