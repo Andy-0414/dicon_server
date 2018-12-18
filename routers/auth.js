@@ -7,7 +7,7 @@ const User = require('../schema/userData')
 
 router.get('/', (req, res) => { // 유저 데이터 가져오기
     if (req.isLogin)
-        res.status(200).send(req.user);
+        res.status(200).send(req.user).end();
     else
         res.status(404).end();
 })
@@ -32,7 +32,7 @@ router.post('/register', function (req, res, next) {
 
     var phoneNumber = req.body.phoneNumber
     var school = req.body.school
-    var age = (parseInt(req.body.age) === Number ? req.body.age : 0)
+    var age = (parseInt(req.body.age) != NaN ? req.body.age : 0)
 
     var isAcceptance = (req.body.isAcceptance ? 1 : 0) // 이메일 수신 여부
 
@@ -48,14 +48,14 @@ router.post('/register', function (req, res, next) {
                 res.status(500).send({
                     message: "서버 장애가 발생하였습니다.",
                     succ: false
-                })
+                }).end()
             }
             if (data) {
                 logger.log(`[Register] 이미 있는 사용자`)
                 res.status(400).send({
                     message: "이미 있는 사용자 입니다.",
                     succ: false
-                })
+                }).end()
             }
             else {
                 var newUser = new User({
@@ -72,17 +72,67 @@ router.post('/register', function (req, res, next) {
                         res.status(500).send({
                             message: "서버 장애가 발생하였습니다.",
                             succ: false
-                        })
+                        }).end()
                     }
                     logger.log(`[Register] 유저 생성 : ${email}`)
                     res.status(200).send({
                         message: "회원가입에 성공하였습니다.",
                         succ: true
-                    })
+                    }).end()
                 })
             }
         })
     }
 }); // 회원 가입
+
+router.post('/update', function (req, res, next) { // 계정 정보 변경
+    if (req.isLogin)
+    {
+        var data = {
+            phoneNumber: req.body.phoneNumber,
+            school: req.body.school,
+            age: req.body.age,
+            isAcceptance : req.body.isAcceptance
+        }
+        var pw = {
+            cPassword : req.body.cPassword,
+            nPassword : req.body.nPassword
+        }
+        User.findOneAndUpdate({email:req.user.email},data,(err,data)=>{
+            if (err) {
+                logger.log(`[Update] ${err}`)
+                res.status(500).send({
+                    message: "서버 장애가 발생하였습니다.",
+                    succ: false
+                }).end()
+            }
+            if(pw.cPassword && pw.nPassword){
+                if(data.password == pw.cPassword){
+                        User.updateOne({ email: data.email }, { password: pw.nPassword},(err)=>{
+                            delete data.password
+                            res.send(data).end()
+                    })
+                }
+                else{
+                    res.status(500).send({
+                        message: "현재 비밀번호가 틀립니다.",
+                        succ: false
+                    }).end()
+                }
+            }
+            else{
+                //delete data.password
+                res.send(data).end()
+            }
+        })
+    }
+    else
+    {
+        res.status(404).send({
+            message: "로그인이 필요한 서비스입니다.",
+            succ: false
+        }).end()
+    }
+});
 
 module.exports = router; // 내보내기 -> app.js
