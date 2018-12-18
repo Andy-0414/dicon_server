@@ -11,7 +11,10 @@ var contestSchema = new Schema({
     isJoin: Boolean,
     isApplicable: Boolean,
     link: String,
-    question: Array
+    question: Array,
+    id: {
+        type: Number
+    }
 })
 
 contestSchema.plugin(autoIncrement.plugin, {

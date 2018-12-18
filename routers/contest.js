@@ -15,15 +15,12 @@ const upload = multer({
             cb(null, 'img/');
         },
         filename: function (req, file, cb) {
-            Contest.findOneAndUpdate({ id: req.body.id }, { img: req.body.id + path.extname(file.originalname) }, (err, data) => {
-                if (err || !data) {
+            var id = (req.body.data ? req.body.data.id : req.body.id)
+            Contest.findOneAndUpdate({ id: id }, { img: id + path.extname(file.originalname) }, (err, data) => {
+                if (err) {
                     logger.log(`[UpdateContest] ${err}`)
-                    res.status(500).send({
-                        message: "서버 장애가 발생하였습니다.",
-                        succ: false
-                    })
                 }
-                cb(null, req.body.id + path.extname(file.originalname));
+                cb(null, id + path.extname(file.originalname));
             })
         }
     }),
@@ -91,12 +88,34 @@ router.get('/getContestData', (req, res) => { // [R]ead
     })
 })
 
+router.get('/getTags', (req, res) => { // [R]ead
+    Contest.find((err, data) => {
+        if (err || !data) {
+            logger.log(`[getTags] ${err}`)
+            res.status(500).send({
+                message: "서버 장애가 발생하였습니다.",
+                succ: false
+            })
+        }
+        var out = []
+        data.forEach(x=>{
+            x.tags.forEach(y=>{
+                out.push(y)
+            })
+        })
+        out = out.filter((item, idx, array) => {
+            return array.indexOf(item) === idx;
+        });
+        res.send(out);
+    })
+})
+
 router.post('/updateContest', (req, res) => { // [U]pdate
     if (req.isLogin) {
-        var id = req.body.data.id
+        var cid = req.body.data.id
         User.findOne({ email: req.user.email }, (err, userdata) => {
-            if (userdata.ownerContest.indexOf(id) != -1) {
-                Contest.findOneAndUpdate({ id: id }, req.body.data, (err, data) => {
+            if (userdata.ownerContest.indexOf(cid) != -1) {
+                Contest.findOneAndUpdate({ id: cid }, req.body.data, (err, data) => {
                     if (err || !data) {
                         logger.log(`[UpdateContest] ${err}`)
                         res.status(500).send({
@@ -105,6 +124,7 @@ router.post('/updateContest', (req, res) => { // [U]pdate
                         })
                     }
                     res.send({
+                        id:cid,
                         message: "성공",
                         succ: true
                     })
