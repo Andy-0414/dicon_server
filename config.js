@@ -1,6 +1,6 @@
 const config = {
     mongo: {
-        url: 'mongodb://localhost/dicon',
+        url: 'mongodb+srv://andy:8CcdLiVD9PlMAdfj@thisismongodb-lk0as.mongodb.net/dicon?retryWrites=true',
         autoRemove: 'interval',
         autoRemoveInterval: 60 // In minutes. Default
     },
