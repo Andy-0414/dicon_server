@@ -31,6 +31,7 @@ router.post('/createContest', (req, res) => { // [C]reate
     if (req.isLogin) {
         var newContest = new Contest(req.body.data)
         newContest.nextCount((err, count) => {
+            newContest.owner = req.user.email
             if (req.body.data.img)
                 newContest.img = count + path.extname(req.body.data.img)
             else

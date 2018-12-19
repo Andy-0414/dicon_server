@@ -14,7 +14,8 @@ var contestSchema = new Schema({
     question: Array,
     id: {
         type: Number
-    }
+    },
+    owner:String
 })
 
 contestSchema.plugin(autoIncrement.plugin, {
