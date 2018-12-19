@@ -6,6 +6,7 @@ var contestSchema = new Schema({
     name: String,
     img: String,
     content: String,
+    md:String,
     date: Object,
     tags: Array,
     isJoin: Boolean,
