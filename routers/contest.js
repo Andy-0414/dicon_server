@@ -71,7 +71,6 @@ router.post('/closeContest', (req, res) => { // [C]reate
     if (req.isLogin) {
         var id = req.body.id
         var winner = req.body.winner
-        console.log(id,winner)
         Contest.findOne({ id: id }, (err, data) => {
             data.isEnded = true
             data.winner = winner
@@ -172,6 +171,41 @@ router.post('/updateContest', (req, res) => { // [U]pdate
         })
     }
 })
+
+router.post('/feedback', (req, res) => { // [U]pdate
+    if (req.isLogin) {
+        var id = req.body.id
+        var feed = req.body.feed
+        Contest.findOne({ id: id }, (err, data) => {
+            var idx = data.feedback.findIndex(x=>x.email == req.user.email)
+            if(idx == -1){
+                data.feedback.push({
+                    email: req.user.email,
+                    feed: feed
+                })
+                data.save(err=>{
+                    res.send({
+                        message: "성공",
+                        succ: true
+                    })
+                })
+            }
+            else{
+                res.status(400).send({
+                    message: "권한 없음",
+                    succ: false
+                })
+            }
+        })
+    }
+    else {
+        res.status(400).send({
+            message: "로그인 필요",
+            succ: false
+        })
+    }
+})
+
 
 router.post('/deleteContest', (req, res) => { // [D]elete
     if (req.isLogin) {

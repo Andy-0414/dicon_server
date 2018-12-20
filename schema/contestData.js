@@ -15,6 +15,7 @@ var contestSchema = new Schema({
     winner: Array,
     link: String,
     question: Array,
+    feedback:Array,
     id: {
         type: Number
     },
