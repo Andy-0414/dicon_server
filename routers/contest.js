@@ -47,7 +47,7 @@ router.post('/createContest', (req, res) => { // [C]reate
                 else {
                     User.findOne({ email: req.user.email }, (err, data) => {
                         data.ownerContest.push(count)
-                        var newJoin = new Join({ id: count, data: [] })
+                        var newJoin = new Join({ id: count, data: [], okUser:[] })
                         newJoin.save(err => {
                             data.save(err => {
                                 res.send({ id: count })

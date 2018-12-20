@@ -17,7 +17,10 @@ router.post('/joinContest', (req, res) => { // [C]reate
             {
                 data.data.push({
                     email: req.user.email,
-                    answer: req.body.data
+                    phoneNumber: req.user.phoneNumber,
+                    school: req.user.school,
+                    age: req.user.age,
+                    answer: req.body.data,
                 })
             }
             data.save(err => {
@@ -43,6 +46,40 @@ router.post('/joinContest', (req, res) => { // [C]reate
         })
     }
 })
+router.post('/okUser', (req, res) => { // [C]reate
+    if (req.isLogin) {
+        var id = req.body.id
+        var email = req.body.email
+        Join.findOne({ id: id }, (err, data) => {
+            var idx = data.data.findIndex(x => x.email == email)
+            if (idx != -1) {
+                var i = data.okUser.indexOf(email)
+                if( i == -1 )
+                    data.okUser.push(email)
+                else
+                    data.okUser.splice(i,1);
+                data.save(err => {
+                    res.send({
+                        message: "성공",
+                        succ: true
+                    })
+                })
+            }
+            else{
+                res.status(404).send({
+                    message: "없는 유저입니다.",
+                    succ: false
+                })
+            }
+        })
+    }
+    else {
+        res.status(400).send({
+            message: "로그인 필요",
+            succ: false
+        })
+    }
+})
 
 router.post('/getJoinData', (req, res) => { //[R]ead
     if (req.isLogin) {
@@ -57,6 +94,10 @@ router.post('/getJoinData', (req, res) => { //[R]ead
                             succ: false
                         })
                     }
+                    data.data.map(x=>{
+                        x.ok = (data.okUser.indexOf(x.email) != -1)
+                        return x
+                    })
                     res.send(data.data)
                 })
             }

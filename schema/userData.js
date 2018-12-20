@@ -8,6 +8,7 @@ module.exports = mongoose.model('userData', new Schema({
     school: String,
     age: Number,
     isAcceptance: Boolean,
+    isAdmin: Boolean,
     ownerContest: Array,
     participantContest: Array
 }));

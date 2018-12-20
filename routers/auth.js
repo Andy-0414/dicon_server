@@ -35,6 +35,7 @@ router.post('/register', function (req, res, next) {
     var age = (parseInt(req.body.age) != NaN ? req.body.age : 0)
 
     var isAcceptance = (req.body.isAcceptance ? 1 : 0) // 이메일 수신 여부
+    var isAdmin = (req.body.isAdmin ? 1 : 0) // 대회 개최자 여부
 
     if (!pw || !email) {
         console.log(pw, email)
@@ -64,7 +65,8 @@ router.post('/register', function (req, res, next) {
                     phoneNumber: phoneNumber,
                     school: school,
                     age: age,
-                    isAcceptance: isAcceptance
+                    isAcceptance: isAcceptance,
+                    isAdmin: isAdmin
                 });
                 newUser.save(err => {
                     if (err) {
