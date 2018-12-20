@@ -10,5 +10,6 @@ module.exports = mongoose.model('userData', new Schema({
     isAcceptance: Boolean,
     isAdmin: Boolean,
     ownerContest: Array,
-    participantContest: Array
+    participantContest: Array,
+    winContest: Array
 }));

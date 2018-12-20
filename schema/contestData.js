@@ -11,6 +11,8 @@ var contestSchema = new Schema({
     tags: Array,
     isJoin: Boolean,
     isApplicable: Boolean,
+    isEnded: Boolean,
+    winner: Array,
     link: String,
     question: Array,
     id: {

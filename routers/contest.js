@@ -30,6 +30,7 @@ const upload = multer({
 router.post('/createContest', (req, res) => { // [C]reate
     if (req.isLogin) {
         var newContest = new Contest(req.body.data)
+        newContest.isEnded = false
         newContest.nextCount((err, count) => {
             newContest.owner = req.user.email
             if (req.body.data.img)
@@ -47,7 +48,7 @@ router.post('/createContest', (req, res) => { // [C]reate
                 else {
                     User.findOne({ email: req.user.email }, (err, data) => {
                         data.ownerContest.push(count)
-                        var newJoin = new Join({ id: count, data: [], okUser:[] })
+                        var newJoin = new Join({ id: count, data: [], okUser: [] })
                         newJoin.save(err => {
                             data.save(err => {
                                 res.send({ id: count })
@@ -55,6 +56,30 @@ router.post('/createContest', (req, res) => { // [C]reate
                         })
                     })
                 }
+            })
+        })
+    }
+    else {
+        res.status(400).send({
+            message: "로그인 필요",
+            succ: false
+        })
+    }
+})
+
+router.post('/closeContest', (req, res) => { // [C]reate
+    if (req.isLogin) {
+        var id = req.body.id
+        var winner = req.body.winner
+        console.log(id,winner)
+        Contest.findOne({ id: id }, (err, data) => {
+            data.isEnded = true
+            data.winner = winner
+            data.save(err=>{
+                res.send({
+                    message: "성공",
+                    succ: true
+                })
             })
         })
     }
@@ -100,8 +125,8 @@ router.get('/getTags', (req, res) => { // [R]ead
             })
         }
         var out = config.tags
-        data.forEach(x=>{
-            x.tags.forEach(y=>{
+        data.forEach(x => {
+            x.tags.forEach(y => {
                 out.push(y)
             })
         })
@@ -126,7 +151,7 @@ router.post('/updateContest', (req, res) => { // [U]pdate
                         })
                     }
                     res.send({
-                        id:cid,
+                        id: cid,
                         message: "성공",
                         succ: true
                     })
