@@ -16,7 +16,10 @@ app.use(session({
     secret: config.secretKey,
     resave: false,
     saveUninitialized: true,
-    store: new MongoStore(config.mongo)
+    cookie: {
+        maxAge: 1000 * 60 * 60 // 쿠키 유효기간 1시간
+    },
+    //store: new MongoStore(config.mongo)
 })) // 세션 스토리지
 
 app.use(passport.initialize()); // 패스포트 사용
