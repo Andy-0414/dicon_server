@@ -1,0 +1,11 @@
+{
+	"apps": [
+		{
+			"name": "cont_our",
+			"script": "app.js",
+			"autorestart": true,
+			"watch": false,
+			"exec_mode": "cluster"
+		}
+	]
+}
