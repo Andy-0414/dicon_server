@@ -12,6 +12,8 @@ const logger = require("./modules/logger");
 
 const db = require("./modules/mongoConnect").getDB;
 
+require("dotenv").config();
+
 app.use(
 	session({
 		secret: config.secretKey,
