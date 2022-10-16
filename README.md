@@ -30,4 +30,4 @@
 
 
 ## 연관 레포지토리
-[front](https://github.com/Andy-0414/dicon_front)
+- [front](https://github.com/Andy-0414/dicon_front)
